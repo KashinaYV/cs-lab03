@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1630955884 source:c:\users\kika-\desktop\3\lab03\histogram.cpp
+	"histogram.h"
+
+1630955884 c:\users\kika-\desktop\3\lab03\histogram.h
+	<vector>
+
+1630955884 source:c:\users\kika-\desktop\3\lab03-test\histogram.cpp
+	"histogram.h"
+
+1630955884 c:\users\kika-\desktop\3\lab03-test\histogram.h
+	<vector>
+
+1630957161 source:c:\users\kika-\desktop\3\lab03-test\test.cpp
+	<cassert>
+	"histogram.h"
+
+1630955884 source:c:\users\kika-\desktop\3\lab03\lab03-test\histogram.cpp
+	"histogram.h"
+
+1630955884 c:\users\kika-\desktop\3\lab03\lab03-test\histogram.h
+	<vector>
+
