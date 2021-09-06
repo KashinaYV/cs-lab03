@@ -21,3 +21,15 @@
 1630955884 c:\users\kika-\desktop\3\lab03\lab03-test\histogram.h
 	<vector>
 
+1630961231 source:c:\users\kika-\desktop\3\lab03\lab03-test\svg.cpp
+	"svg.h"
+
+1630960960 c:\users\kika-\desktop\3\lab03\lab03-test\svg.h
+	<vector>
+	<iostream>
+
+1630961146 source:c:\users\kika-\desktop\3\lab03\lab03-test\test.cpp
+	<cassert>
+	"histogram.h"
+	"svg.h"
+

@@ -34,8 +34,8 @@ main() {
     find_minmax(numbers,min,max);
     const auto bins=make_histogram(numbers,bin_count);
 
-
-    show_histogram_svg(bins);
+    size_t bin_height;
+    show_histogram_svg(bins, bin_height);
 
     return 0;
 }

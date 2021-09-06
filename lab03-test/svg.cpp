@@ -66,5 +66,6 @@ show_histogram_svg(const vector<size_t>& bins, size_t& bin_height)
         svg_rect(left, TEXT_HEIGHT, BIN_WIDTH, bin_height);
         left += BIN_WIDTH;
     }
+    cout << endl;
     svg_end();
 }
