@@ -63,7 +63,7 @@ show_histogram_svg(const vector<size_t>& bins, size_t& bin_height)
         bin_height=(size_t)(bin*scaling_factor);
 
         svg_text(left + TEXT_LEFT, TEXT_BASELINE, to_string(bin));
-        svg_rect(left, TEXT_HEIGHT, BIN_WIDTH, bin_height);
+        svg_rect(left, TEXT_HEIGHT, BIN_WIDTH, bin_height, "white", "#c71585" );
         left += BIN_WIDTH;
     }
     svg_end();
