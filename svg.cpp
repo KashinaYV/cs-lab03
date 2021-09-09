@@ -33,43 +33,42 @@ svg_rect(double x, double y, double width, double height, string stroke, string 
     cout << "<rect x='" << x << "' y='" << y <<"' width='"<< width <<"' height='"<<height<<"' stroke='"<<stroke<<"' fill='"<<fill<<"' />" << endl;
 }
 
-void
-show_histogram_svg(const vector<size_t>& bins)
+void show_histogram_svg(const vector<size_t>& bins, size_t& bin_height)
 {
-    const auto IMAGE_WIDTH = 1000;
-    const auto IMAGE_HEIGHT = 400;
-    const auto TEXT_LEFT = 20;
+    if (bins.size() == 0)
+    {
+        return;
+    }
+    const auto IMAGE_WIDTH = 400;
+    const auto IMAGE_HEIGHT = 300;
+    const auto TEXT_LEFT = 15;
     const auto TEXT_BASELINE = 20;
-    const auto TEXT_WIDTH = 50;
-    const auto BIN_HEIGHT = 30;
-    const auto BLOCK_WIDTH = 10;
-    const size_t SCREEN_WIDTH = 80;
-    const size_t MAX_ASTERISK = SCREEN_WIDTH - 4 - 1;
+    const auto TEXT_HEIGHT = 30;
+    const auto BIN_WIDTH = 30;
+    const auto BLOCK_HEIGHT = 10;
+
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
 
-    double top = 0;
+    double left =0;
 
-    size_t max_count = 0;
+    size_t max_count=bins[0];
     for (size_t count : bins)
     {
-        if (count > max_count)
+        if ( count >max_count)
         {
-            max_count = count;
+            max_count=count;
         }
     }
-    const bool scaling_needed = max_count > MAX_ASTERISK;
-    for (size_t bin : bins)
+
+    for (size_t bin: bins)
     {
-        size_t height = bin;
-        if (scaling_needed)
-        {
-            const double scaling_factor = (double)MAX_ASTERISK / max_count;
-            height = (size_t)(bin * scaling_factor);
-        }
-        const double bin_width = BLOCK_WIDTH * height;
-        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
-        top += BIN_HEIGHT;
+        const double scaling_factor = (double)(IMAGE_HEIGHT - TEXT_HEIGHT) / max_count;
+        bin_height=(size_t)(bin*scaling_factor);
+
+        svg_text(left + TEXT_LEFT, TEXT_BASELINE, to_string(bin));
+        svg_rect(left, TEXT_HEIGHT, BIN_WIDTH, bin_height);
+        left += BIN_WIDTH;
     }
+
     svg_end();
 }
