@@ -1,5 +1,29 @@
 #include "svg.h"
 
+string
+make_info_text() {
+    stringstream buffer;
+
+    DWORD info = GetVersion();
+    DWORD mask = 0x0000ffff;
+    DWORD version = info & mask;
+    DWORD platform = info >> 16;
+    DWORD mask_2 = 0x0000ff;
+
+   if ((info & 0x80000000) == 0)
+    {
+        DWORD version_major = version & mask_2;
+        DWORD version_minor = version >> 8;
+        DWORD build = platform;
+        buffer << "Windows v"<<version_major<<"."<<version_minor<<"(build"<<build<<")";
+
+    }
+    char computer_name[MAX_COMPUTERNAME_LENGTH + 1];
+    DWORD size = MAX_COMPUTERNAME_LENGTH+1;
+    GetComputerNameA(computer_name, &size);
+    buffer<<"Computer name:" <<computer_name;
+    return buffer.str();
+}
 
 void
 svg_begin(double width, double height)
@@ -39,18 +63,16 @@ void show_histogram_svg(const vector<size_t>& bins, size_t& bin_height)
     {
         return;
     }
-    const auto IMAGE_WIDTH = 400;
+    const auto IMAGE_WIDTH = 500;
     const auto IMAGE_HEIGHT = 300;
     const auto TEXT_LEFT = 15;
     const auto TEXT_BASELINE = 20;
     const auto TEXT_HEIGHT = 30;
     const auto BIN_WIDTH = 30;
     const auto BLOCK_HEIGHT = 10;
-
+    const auto TEXT_TOP = 10;
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
-
     double left =0;
-
     size_t max_count=bins[0];
     for (size_t count : bins)
     {
@@ -62,13 +84,12 @@ void show_histogram_svg(const vector<size_t>& bins, size_t& bin_height)
 
     for (size_t bin: bins)
     {
-        const double scaling_factor = (double)(IMAGE_HEIGHT - TEXT_HEIGHT) / max_count;
+        const double scaling_factor = (double)(IMAGE_HEIGHT - TEXT_TOP) / max_count;
         bin_height=(size_t)(bin*scaling_factor);
-
-        svg_text(left + TEXT_LEFT, TEXT_BASELINE, to_string(bin));
-        svg_rect(left, TEXT_HEIGHT, BIN_WIDTH, bin_height);
+        svg_text(left + TEXT_LEFT, TEXT_BASELINE+TEXT_TOP, to_string(bin));
+        svg_rect(left, TEXT_HEIGHT+TEXT_TOP, BIN_WIDTH, bin_height, "white", "#c71585");
         left += BIN_WIDTH;
     }
-
+    svg_text(0, TEXT_TOP + 5, make_info_text());
     svg_end();
 }

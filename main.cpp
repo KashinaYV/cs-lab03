@@ -5,6 +5,7 @@
 #include <curl/curl.h>
 #include <sstream>
 #include <string>
+#include <windows.h>
 
 using namespace std;
 
@@ -53,19 +54,16 @@ download(const string& address, bool verbose) {
     stringstream buffer;
     curl_global_init(CURL_GLOBAL_ALL);
     CURL *curl = curl_easy_init();
-        if(curl)
-        {
+        if(curl){
             CURLcode res;
-            if (verbose)
-            {
+            if (verbose){
                 curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
             }
             curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
             res = curl_easy_perform(curl);
-            if (res)
-            {
+            if (res){
                 cerr << curl_easy_strerror(res) << endl;
                 exit(1);
             }
@@ -75,29 +73,24 @@ download(const string& address, bool verbose) {
 }
 
 
-Verb input_with_verb(int argc, char* argv[])
-{
+Verb input_with_verb(int argc, char* argv[]){
     Verb use;
 
     use.verbose=false;
     use.help=false;
      use.urladress=0;
 
-    for (int i=1; i<argc; i++)
-    {
-        if (argv[i][0]=='-')
-        {
-            if (strcmp(argv[i], "-verbose") == 0)
-            {
+    for (int i=1; i<argc; i++){
+        if (argv[i][0]=='-'){
+            if (strcmp(argv[i], "-verbose") == 0){
                 use.verbose=true;
             }
-            else
-            {
+            else{
+
                 use.help=true;
             }
         }
-        else
-        {
+        else{
             use.urladress=argv[i];
         }
     }
@@ -110,18 +103,15 @@ int
 main(int argc, char* argv[]) {
         Input input;
     auto data=input_with_verb(argc,argv);
-        if (data.help)
-    {
+        if (data.help){
         cerr <<"\nHELP:\n *For making input from web enter URL of page to parameters"<<
         "\n *For using CURLOPT_VERBOSE mode enter ''-verbose''" << "\n";
         exit(2);
     }
-    if (data.urladress)
-    {
+    if (data.urladress){
         input=download(data.urladress,data.verbose);
     }
-    else
-    {
+    else{
         input=read_input(cin, true);
     }
     const auto bins=make_histogram(input);
