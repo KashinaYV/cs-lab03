@@ -2,6 +2,7 @@
 #include <vector>
 #include "histogram.h"
 #include "svg.h"
+#include <windows.h>
 
 using namespace std;
 
@@ -19,6 +20,7 @@ input_numbers(size_t count)
 
 int
 main() {
+    /*
     size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
@@ -36,6 +38,11 @@ main() {
 
     size_t bin_height;
     show_histogram_svg(bins, bin_height);
+    */
+
+    DWORD WINAPI GetVersion(void);
+    printf("Windows (decimal) version is %u.\n", GetVersion());
+    printf("WINDOWS (16x) version is %x. \n",GetVersion());
 
     return 0;
 }
